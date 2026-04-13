@@ -1,0 +1,2069 @@
+// ==========================================
+// FILE: index.html
+// ==========================================
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AIO AI – Combined Intelligence System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
+
+// ==========================================
+// FILE: vite.config.js
+// ==========================================
+
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5001',
+        changeOrigin: true,
+      },
+    },
+  },
+})
+
+
+// ==========================================
+// FILE: src/index.css
+// ==========================================
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0B0F1A;
+  --cyan: #00F5FF;
+  --purple: #7B61FF;
+  --white: #FFFFFF;
+  --glass: rgba(255,255,255,0.03);
+  --border: rgba(255,255,255,0.08);
+  --border-cyan: rgba(0,245,255,0.25);
+  --border-purple: rgba(123,97,255,0.25);
+  --text-muted: rgba(255,255,255,0.5);
+  --font-heading: 'Orbitron', monospace;
+  --font-body: 'Poppins', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 2px; }
+
+::selection { background: rgba(0,245,255,0.2); color: var(--cyan); }
+
+
+// ==========================================
+// FILE: src/main.jsx
+// ==========================================
+
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './index.css'
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+
+
+// ==========================================
+// FILE: src/App.jsx
+// ==========================================
+
+import { useState, useEffect } from 'react'
+import LoadingScreen from './components/LoadingScreen'
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
+import Features from './components/Features'
+import Demo from './components/Demo'
+import Technology from './components/Technology'
+import Pricing from './components/Pricing'
+import Testimonials from './components/Testimonials'
+import Globe from './components/Globe'
+import FutureVision from './components/FutureVision'
+import Contact from './components/Contact'
+import Footer from './components/Footer'
+import CursorGlow from './components/CursorGlow'
+
+export default function App() {
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    const t = setTimeout(() => setLoaded(true), 2600)
+    return () => clearTimeout(t)
+  }, [])
+
+  return (
+    <>
+      <CursorGlow />
+      {!loaded && <LoadingScreen />}
+      <div style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.6s ease' }}>
+        <Navbar />
+        <Hero />
+        <Features />
+        <Demo />
+        <Technology />
+        <Globe />
+        <Pricing />
+        <Testimonials />
+        <FutureVision />
+        <Contact />
+        <Footer />
+      </div>
+    </>
+  )
+}
+
+
+// ==========================================
+// FILE: src/components/Technology.jsx
+// ==========================================
+
+import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+
+const tech = [
+  { icon: '🤖', name: 'Artificial Intelligence', desc: 'Neural mesh processing' },
+  { icon: '🗣️', name: 'NLP Engine', desc: '40+ language support' },
+  { icon: '📶', name: 'IoT Protocol', desc: 'MQTT & WebSocket layer' },
+  { icon: '⚙️', name: 'Embedded Systems', desc: 'ARM Cortex-M core' },
+  { icon: '🔐', name: 'Edge Security', desc: 'Zero-trust architecture' },
+  { icon: '☁️', name: 'Cloud Sync', desc: 'Sub-10ms latency' },
+  { icon: '🌐', name: 'Mesh Network', desc: 'P2P distributed nodes' },
+  { icon: '🔋', name: 'Power AI', desc: 'Adaptive energy core' },
+]
+
+export default function Technology() {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
+
+  return (
+    <section ref={ref} style={{ padding: '100px 40px', maxWidth: 1100, margin: '0 auto' }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}>
+        <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 10, letterSpacing: 4, color: '#00F5FF', marginBottom: 12 }}>// TECH STACK</div>
+        <h2 style={{ fontFamily: 'Orbitron, monospace', fontSize: 'clamp(24px,3vw,40px)', fontWeight: 700, marginBottom: 14 }}>
+          Powered By <span style={{ color: '#00F5FF' }}>Technology</span>
+        </h2>
+        <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.45)', maxWidth: 440, lineHeight: 1.7, marginBottom: 56, fontWeight: 300 }}>
+          Built on proven frameworks, integrated for the most advanced combined intelligence system ever deployed.
+        </p>
+      </motion.div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
+        {tech.map((t, i) => (
+          <motion.div
+            key={t.name}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.4, delay: i * 0.07 }}
+            whileHover={{ borderColor: 'rgba(123,97,255,0.4)', y: -3 }}
+            style={{
+              background: 'rgba(255,255,255,0.02)',
+              border: '0.5px solid rgba(255,255,255,0.07)',
+              borderRadius: 14, padding: '22px 18px',
+              textAlign: 'center', transition: 'all 0.2s',
+            }}
+          >
+            <div style={{ fontSize: 28, marginBottom: 10 }}>{t.icon}</div>
+            <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 10, letterSpacing: 1, color: 'rgba(255,255,255,0.8)', marginBottom: 6 }}>{t.name}</div>
+            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', fontWeight: 300 }}>{t.desc}</div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+
+// ==========================================
+// FILE: src/components/Globe.jsx
+// ==========================================
+
+import { useRef, useEffect } from 'react'
+import { motion, useInView } from 'framer-motion'
+
+export default function Globe() {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const canvasRef = useRef(null)
+  const animRef = useRef(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    const W = canvas.width = 400
+    const H = canvas.height = 400
+    const cx = W / 2, cy = H / 2, R = 160
+    let angle = 0
+
+    const dots = []
+    for (let lat = -80; lat <= 80; lat += 18) {
+      const r = Math.cos(lat * Math.PI / 180)
+      const count = Math.max(4, Math.floor(r * 24))
+      for (let i = 0; i < count; i++) {
+        const lng = (i / count) * 360 - 180
+        dots.push({ lat: lat * Math.PI / 180, lng: lng * Math.PI / 180 })
+      }
+    }
+
+    const lines = [
+      [{ lat: 0.6, lng: 0 }, { lat: 0.8, lng: 1.2 }, { lat: 0.9, lng: 2.0 }],
+      [{ lat: -0.3, lng: -1.5 }, { lat: 0.1, lng: -0.8 }, { lat: 0.4, lng: 0.2 }],
+      [{ lat: 0.2, lng: 2.5 }, { lat: 0.5, lng: 3.2 }, { lat: 0.7, lng: 3.8 }],
+    ]
+
+    function project(lat, lng, rot) {
+      const x = Math.cos(lat) * Math.sin(lng + rot)
+      const y = Math.sin(lat)
+      const z = Math.cos(lat) * Math.cos(lng + rot)
+      return { x: cx + x * R, y: cy - y * R, z }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H)
+      angle += 0.004
+
+      // Globe sphere glow
+      const grad = ctx.createRadialGradient(cx, cy, R * 0.3, cx, cy, R)
+      grad.addColorStop(0, 'rgba(0,245,255,0.04)')
+      grad.addColorStop(1, 'rgba(123,97,255,0.01)')
+      ctx.beginPath()
+      ctx.arc(cx, cy, R, 0, Math.PI * 2)
+      ctx.fillStyle = grad
+      ctx.fill()
+
+      // Outer ring
+      ctx.beginPath()
+      ctx.arc(cx, cy, R, 0, Math.PI * 2)
+      ctx.strokeStyle = 'rgba(0,245,255,0.1)'
+      ctx.lineWidth = 0.5
+      ctx.stroke()
+
+      // Dots
+      dots.forEach(d => {
+        const p = project(d.lat, d.lng, angle)
+        if (p.z > 0) {
+          const alpha = (p.z * 0.7 + 0.1)
+          ctx.beginPath()
+          ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2)
+          ctx.fillStyle = `rgba(0,245,255,${alpha.toFixed(2)})`
+          ctx.fill()
+        }
+      })
+
+      // Connection lines
+      lines.forEach((line, li) => {
+        ctx.beginPath()
+        let started = false
+        line.forEach(pt => {
+          const p = project(pt.lat, pt.lng, angle)
+          if (p.z > 0) {
+            if (!started) { ctx.moveTo(p.x, p.y); started = true }
+            else ctx.lineTo(p.x, p.y)
+          }
+        })
+        ctx.strokeStyle = li === 0 ? 'rgba(0,245,255,0.4)' : 'rgba(123,97,255,0.35)'
+        ctx.lineWidth = 1
+        ctx.stroke()
+      })
+
+      // Equator line
+      ctx.beginPath()
+      for (let i = 0; i <= 360; i += 4) {
+        const p = project(0, i * Math.PI / 180, angle)
+        if (p.z > 0) {
+          if (i === 0) ctx.moveTo(p.x, p.y)
+          else ctx.lineTo(p.x, p.y)
+        }
+      }
+      ctx.strokeStyle = 'rgba(0,245,255,0.15)'
+      ctx.lineWidth = 0.5
+      ctx.stroke()
+
+      animRef.current = requestAnimationFrame(draw)
+    }
+
+    draw()
+    return () => cancelAnimationFrame(animRef.current)
+  }, [])
+
+  return (
+    <section ref={ref} style={{ padding: '80px 40px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(0,245,255,0.03) 0%, transparent 70%)' }} />
+
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}>
+        <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 10, letterSpacing: 4, color: '#00F5FF', marginBottom: 12 }}>// GLOBAL NETWORK</div>
+        <h2 style={{ fontFamily: 'Orbitron, monospace', fontSize: 'clamp(24px,3vw,40px)', fontWeight: 700, marginBottom: 14 }}>
+          Connected <span style={{ color: '#00F5FF' }}>Worldwide</span>
+        </h2>
+        <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.4)', maxWidth: 420, margin: '0 auto 40px', lineHeight: 1.7, fontWeight: 300 }}>
+          AIO AI nodes span 147 countries, processing 2.4 billion queries per second across a distributed intelligence mesh.
+        </p>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={inView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        style={{ display: 'flex', justifyContent: 'center' }}
+      >
+        <canvas ref={canvasRef} style={{ maxWidth: 400, width: '100%' }} />
+      </motion.div>
+
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 40, flexWrap: 'wrap', marginTop: 40 }}>
+        {[['147', 'Countries'], ['2.4B', 'Queries/sec'], ['99.99%', 'Uptime'], ['<10ms', 'Latency']].map(([val, label]) => (
+          <motion.div key={label} initial={{ opacity: 0, y: 10 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.4 }}>
+            <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 28, fontWeight: 900, color: '#00F5FF', textShadow: '0 0 20px rgba(0,245,255,0.4)' }}>{val}</div>
+            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', letterSpacing: 1, marginTop: 4 }}>{label}</div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+
+// ==========================================
+// FILE: src/components/Testimonials.jsx
+// ==========================================
+
+import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+
+const testimonials = [
+  { name: 'Aria Chen', role: 'CTO, NovaTech Corp', avatar: 'AC', quote: 'AIO AI transformed how our 500-person engineering team operates. The adaptive intelligence layer reduced our deployment cycles by 73%. I\'ve never seen anything like it.', rating: 5 },
+  { name: 'Marcus Oduya', role: 'Lead Scientist, SpaceForward', avatar: 'MO', quote: 'The anti-gravity interface concept alone is worth the investment. We\'re using the spatial UI for satellite control systems. Absolutely mind-bending technology.', rating: 5 },
+  { name: 'Sofia Reyes', role: 'Director of AI, Nexora Labs', avatar: 'SR', quote: 'We integrated AIO AI into our research pipeline in under 48 hours. The multi-device sync and offline mode are game-changers for field research teams.', rating: 5 },
+]
+
+export default function Testimonials() {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
+
+  return (
+    <section ref={ref} style={{ padding: '100px 40px', maxWidth: 1100, margin: '0 auto' }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}>
+        <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 10, letterSpacing: 4, color: '#00F5FF', marginBottom: 12 }}>// TESTIMONIALS</div>
+        <h2 style={{ fontFamily: 'Orbitron, monospace', fontSize: 'clamp(24px,3vw,40px)', fontWeight: 700, marginBottom: 14 }}>
+          What Pioneers <span style={{ color: '#00F5FF' }}>Say</span>
+        </h2>
+        <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.45)', maxWidth: 420, lineHeight: 1.7, marginBottom: 56, fontWeight: 300 }}>
+          Teams across the globe are reshaping their workflows with AIO AI.
+        </p>
+      </motion.div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
+        {testimonials.map((t, i) => (
+          <motion.div
+            key={t.name}
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: i * 0.12 }}
+            style={{
+              background: 'rgba(255,255,255,0.02)',
+              border: '0.5px solid rgba(255,255,255,0.07)',
+              borderRadius: 16, padding: '28px 24px',
+            }}
+          >
+            <div style={{ display: 'flex', gap: 4, marginBottom: 16 }}>
+              {Array(t.rating).fill(0).map((_, j) => (
+                <span key={j} style={{ color: '#00F5FF', fontSize: 14 }}>★</span>
+              ))}
+            </div>
+            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, fontWeight: 300, marginBottom: 24, fontStyle: 'italic' }}>"{t.quote}"</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'linear-gradient(135deg, #00F5FF22, #7B61FF44)', border: '0.5px solid rgba(0,245,255,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 600, color: '#00F5FF', fontFamily: 'Orbitron, monospace' }}>
+                {t.avatar}
+              </div>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 600, fontFamily: 'Orbitron, monospace', letterSpacing: 0.5 }}>{t.name}</div>
+                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginTop: 2 }}>{t.role}</div>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+
+// ==========================================
+// FILE: src/components/Footer.jsx
+// ==========================================
+
+import { motion } from 'framer-motion'
+
+const links = {
+  Product: ['Features', 'Demo', 'Pricing', 'Roadmap'],
+  Company: ['About', 'Blog', 'Careers', 'Press'],
+  Support: ['Documentation', 'API Reference', 'Status', 'Contact'],
+  Legal: ['Privacy', 'Terms', 'Security', 'Cookies'],
+}
+
+export default function Footer() {
+  return (
+    <footer style={{ borderTop: '0.5px solid rgba(255,255,255,0.06)', padding: '60px 40px 32px' }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 40, marginBottom: 60 }}>
+          {/* Brand */}
+          <div>
+            <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 22, fontWeight: 900, color: '#00F5FF', letterSpacing: 2, textShadow: '0 0 20px rgba(0,245,255,0.4)', marginBottom: 14 }}>AIO AI</div>
+            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)', lineHeight: 1.7, fontWeight: 300, maxWidth: 200 }}>
+              Combined Intelligence System with Anti-Gravity Technology. Building the future, one node at a time.
+            </p>
+            <div style={{ display: 'flex', gap: 12, marginTop: 20 }}>
+              {['𝕏', 'in', '⬡', '▶'].map((icon, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ borderColor: 'rgba(0,245,255,0.4)', color: '#00F5FF' }}
+                  style={{ width: 34, height: 34, borderRadius: 8, border: '0.5px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, color: 'rgba(255,255,255,0.4)', cursor: 'pointer', transition: 'all 0.2s' }}
+                >
+                  {icon}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Links */}
+          {Object.entries(links).map(([section, items]) => (
+            <div key={section}>
+              <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 10, letterSpacing: 3, color: 'rgba(255,255,255,0.5)', marginBottom: 16 }}>{section.toUpperCase()}</div>
+              {items.map(item => (
+                <motion.div
+                  key={item}
+                  whileHover={{ color: '#00F5FF', x: 3 }}
+                  style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)', marginBottom: 10, cursor: 'pointer', transition: 'all 0.2s', fontWeight: 300 }}
+                >
+                  {item}
+                </motion.div>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom bar */}
+        <div style={{ borderTop: '0.5px solid rgba(255,255,255,0.05)', paddingTop: 28, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.2)', letterSpacing: 1 }}>
+            © 2026 AIO AI · All rights reserved
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#00F5FF', animation: 'pulse 1.5s ease infinite' }} />
+            <span style={{ fontFamily: 'Orbitron, monospace', fontSize: 10, color: 'rgba(0,245,255,0.5)', letterSpacing: 2 }}>ALL SYSTEMS OPERATIONAL</span>
+          </div>
+        </div>
+      </div>
+      <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}`}</style>
+    </footer>
+  )
+}
+
+
+// ==========================================
+// FILE: src/components/FutureVision.jsx
+// ==========================================
+
+import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+
+export default function FutureVision() {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
+
+  const orbits = [
+    { size: 140, duration: 8, dot: '#00F5FF', label: 'Neural Core' },
+    { size: 210, duration: 13, dot: '#7B61FF', label: 'AI Mesh', reverse: true },
+    { size: 280, duration: 20, dot: 'rgba(255,255,255,0.6)', label: 'IoT Network' },
+  ]
+
+  return (
+    <section ref={ref} style={{ padding: '100px 40px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(123,97,255,0.06) 0%, transparent 60%)' }} />
+
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}>
+        <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 10, letterSpacing: 4, color: '#7B61FF', marginBottom: 12 }}>// FUTURE VISION</div>
+        <h2 style={{ fontFamily: 'Orbitron, monospace', fontSize: 'clamp(24px,3vw,40px)', fontWeight: 700, marginBottom: 14 }}>
+          Anti-Gravity <span style={{ color: '#7B61FF' }}>Intelligence</span>
+        </h2>
+        <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.4)', maxWidth: 460, margin: '0 auto 60px', lineHeight: 1.7, fontWeight: 300 }}>
+          Spatial intelligence that operates above physical constraints — a new dimension of human-machine interaction beyond anything built before.
+        </p>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.7 }}
+        animate={inView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 1, delay: 0.2, ease: 'easeOut' }}
+        style={{ position: 'relative', width: 300, height: 300, margin: '0 auto 60px' }}
+      >
+        {/* Core */}
+        <motion.div
+          animate={{ scale: [1, 1.1, 1], boxShadow: ['0 0 30px rgba(0,245,255,0.5)', '0 0 60px rgba(0,245,255,0.8)', '0 0 30px rgba(0,245,255,0.5)'] }}
+          transition={{ duration: 2.5, repeat: Infinity }}
+          style={{
+            position: 'absolute', top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 60, height: 60, borderRadius: '50%',
+            background: 'radial-gradient(circle, #00F5FF, #7B61FF)',
+            zIndex: 10,
+          }}
+        />
+
+        {orbits.map((o, i) => (
+          <div key={i} style={{
+            position: 'absolute',
+            top: '50%', left: '50%',
+            width: o.size, height: o.size,
+            marginTop: -o.size / 2, marginLeft: -o.size / 2,
+            borderRadius: '50%',
+            border: '0.5px solid rgba(0,245,255,0.15)',
+            animation: `spin${i} ${o.duration}s linear infinite${o.reverse ? ' reverse' : ''}`,
+          }}>
+            <div style={{
+              position: 'absolute', top: -5, left: '50%', marginLeft: -5,
+              width: 10, height: 10, borderRadius: '50%',
+              background: o.dot,
+              boxShadow: `0 0 12px ${o.dot}`,
+            }} />
+          </div>
+        ))}
+
+        <style>{`
+          @keyframes spin0{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+          @keyframes spin1{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
+          @keyframes spin2{from{transform:rotate(45deg)}to{transform:rotate(405deg)}}
+        `}</style>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 0.5 }}
+      >
+        <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 10, letterSpacing: 3, color: 'rgba(0,245,255,0.5)', marginBottom: 32 }}>
+          GRAVITATIONAL INTELLIGENCE CORE — ACTIVE
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 40, flexWrap: 'wrap' }}>
+          {[['Neural Core', '#00F5FF'], ['AI Mesh', '#7B61FF'], ['IoT Network', 'rgba(255,255,255,0.5)']].map(([label, color]) => (
+            <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: color, boxShadow: `0 0 8px ${color}` }} />
+              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontFamily: 'Orbitron, monospace', letterSpacing: 1 }}>{label}</span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  )
+}
+
+
+// ==========================================
+// FILE: src/components/CursorGlow.jsx
+// ==========================================
+
+import { useEffect, useRef } from 'react'
+
+export default function CursorGlow() {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const move = (e) => {
+      if (ref.current) {
+        ref.current.style.left = e.clientX + 'px'
+        ref.current.style.top = e.clientY + 'px'
+      }
+    }
+    window.addEventListener('mousemove', move)
+    return () => window.removeEventListener('mousemove', move)
+  }, [])
+
+  return (
+    <div ref={ref} style={{
+      position: 'fixed',
+      width: 400, height: 400,
+      borderRadius: '50%',
+      background: 'radial-gradient(circle, rgba(0,245,255,0.04) 0%, transparent 70%)',
+      transform: 'translate(-50%, -50%)',
+      pointerEvents: 'none',
+      zIndex: 9998,
+      transition: 'left 0.1s ease, top 0.1s ease',
+    }} />
+  )
+}
+
+
+// ==========================================
+// FILE: src/components/Features.jsx
+// ==========================================
+
+import { useRef, useState, useEffect, useCallback } from 'react'
+import { motion, useInView, AnimatePresence } from 'framer-motion'
+
+// ── Backend proxy at /api/chat — API key lives server-side in .env ────────────
+
+const callAI = async (system, userMsg) => {
+  const res = await fetch('/api/chat', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      system,
+      messages: [{ role: 'user', content: userMsg }],
+    }),
+  })
+  const data = await res.json()
+  if (!res.ok) throw new Error(data?.error || 'API error')
+  return data.content?.map(c => c.text || '').join('') || ''
+}
+
+// ── 1. VOICE ASSISTANT ───────────────────────────────────────────────────────
+function VoiceModal() {
+  const [status, setStatus] = useState('idle') // idle | listening | thinking | speaking
+  const [transcript, setTranscript] = useState('')
+  const [reply, setReply] = useState('')
+  const [error, setError] = useState('')
+  const recogRef = useRef(null)
+
+  const speak = (text) => {
+    if (!window.speechSynthesis) return
+    window.speechSynthesis.cancel()
+    const utt = new SpeechSynthesisUtterance(text)
+    utt.rate = 1.05; utt.pitch = 1.1
+    const voices = window.speechSynthesis.getVoices()
+    const preferred = voices.find(v => v.name.includes('Google') || v.name.includes('Samantha') || v.lang === 'en-US')
+    if (preferred) utt.voice = preferred
+    utt.onend = () => setStatus('idle')
+    setStatus('speaking')
+    window.speechSynthesis.speak(utt)
+  }
+
+  const startListening = useCallback(() => {
+    setError(''); setTranscript(''); setReply('')
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition
+    if (!SR) { setError('Speech recognition not supported in this browser. Try Chrome.'); return }
+    const recog = new SR()
+    recog.lang = 'en-US'; recog.interimResults = true; recog.maxAlternatives = 1
+    recog.onstart = () => setStatus('listening')
+    recog.onresult = (e) => {
+      const t = Array.from(e.results).map(r => r[0].transcript).join('')
+      setTranscript(t)
+      if (recogRef.current) recogRef.current.lastTranscript = t
+    }
+    recog.onend = async () => {
+      setStatus('thinking')
+      try {
+        const text = recogRef.current?.lastTranscript || transcript || ''
+        if (!text.trim()) { setStatus('idle'); return }
+        const answer = await callAI(
+          'You are AIO AI, a futuristic voice-controlled intelligence system. Respond concisely in 2-3 sentences, confident and slightly futuristic in tone.',
+          text
+        )
+        setReply(answer)
+        speak(answer)
+      } catch (e) { setError(e.message); setStatus('idle') }
+    }
+    recog.onerror = (e) => { setError(`Mic error: ${e.error}`); setStatus('idle') }
+    recogRef.current = recog
+    recog.start()
+  }, [transcript])
+
+  const stop = () => { recogRef.current?.stop(); window.speechSynthesis?.cancel(); setStatus('idle') }
+
+  const statusColors = { idle: '#555', listening: '#00F5FF', thinking: '#7B61FF', speaking: '#00FF99' }
+  const statusLabels = { idle: 'TAP MIC TO SPEAK', listening: 'LISTENING...', thinking: 'PROCESSING...', speaking: 'SPEAKING...' }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24, padding: '10px 0' }}>
+      <div style={{ position: 'relative' }}>
+        <motion.button
+          animate={status === 'listening' ? { scale: [1, 1.12, 1], boxShadow: ['0 0 20px rgba(0,245,255,0.4)', '0 0 50px rgba(0,245,255,0.8)', '0 0 20px rgba(0,245,255,0.4)'] } : {}}
+          transition={{ duration: 1.2, repeat: Infinity }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={status === 'idle' ? startListening : stop}
+          style={{
+            width: 90, height: 90, borderRadius: '50%',
+            background: status === 'listening' ? 'radial-gradient(circle, rgba(0,245,255,0.3), rgba(0,245,255,0.05))' : 'rgba(255,255,255,0.05)',
+            border: `2px solid ${statusColors[status]}`,
+            cursor: 'pointer', fontSize: 32, display: 'flex', alignItems: 'center', justifyContent: 'center',
+            transition: 'all 0.3s',
+          }}
+        >
+          {status === 'thinking' ? '🧠' : status === 'speaking' ? '🔊' : '🎙️'}
+        </motion.button>
+      </div>
+      <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 10, letterSpacing: 3, color: statusColors[status], transition: 'color 0.3s' }}>
+        {statusLabels[status]}
+      </div>
+      {transcript && (
+        <div style={{ width: '100%', background: 'rgba(0,245,255,0.05)', border: '0.5px solid rgba(0,245,255,0.2)', borderRadius: 10, padding: '12px 16px' }}>
+          <div style={{ fontSize: 10, color: 'rgba(0,245,255,0.5)', fontFamily: 'Orbitron, monospace', letterSpacing: 2, marginBottom: 6 }}>YOU SAID</div>
+          <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)' }}>{transcript}</div>
+        </div>
+      )}
+      {reply && (
+        <div style={{ width: '100%', background: 'rgba(123,97,255,0.06)', border: '0.5px solid rgba(123,97,255,0.25)', borderRadius: 10, padding: '12px 16px' }}>
+          <div style={{ fontSize: 10, color: 'rgba(123,97,255,0.7)', fontFamily: 'Orbitron, monospace', letterSpacing: 2, marginBottom: 6 }}>AIO AI RESPONSE</div>
+          <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.75)', lineHeight: 1.7 }}>{reply}</div>
+        </div>
+      )}
+      {error && <div style={{ fontSize: 13, color: '#FF6B6B', textAlign: 'center' }}>{error}</div>}
+      <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', textAlign: 'center', lineHeight: 1.6 }}>
+        Powered by Web Speech API + Gemini AI · Works best in Chrome
+      </div>
+    </div>
+  )
+}
+
+// ── 2. SMART AUTOMATION ──────────────────────────────────────────────────────
+function AutomationModal() {
+  const [task, setTask] = useState('')
+  const [plan, setPlan] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [executing, setExecuting] = useState(-1)
+  const [done, setDone] = useState(false)
+
+  const generate = async () => {
+    if (!task.trim()) return
+    setLoading(true); setPlan(null); setDone(false); setExecuting(-1)
+    try {
+      const raw = await callAI(
+        'You are AIO AI\'s automation engine. When given a task, respond ONLY with a JSON array of 4-5 automation steps. Each step: {"step": "Step title", "action": "What AIO AI does", "duration": number_of_ms_between_200_and_900}. No markdown, no explanation, just the JSON array.',
+        task
+      )
+      const clean = raw.replace(/```json|```/g, '').trim()
+      const steps = JSON.parse(clean)
+      setPlan(steps)
+      // Auto-execute each step
+      for (let i = 0; i < steps.length; i++) {
+        setExecuting(i)
+        await new Promise(r => setTimeout(r, steps[i].duration || 600))
+      }
+      setExecuting(-1); setDone(true)
+    } catch (e) {
+      setPlan([{ step: 'Error', action: e.message, duration: 0 }])
+    } finally { setLoading(false) }
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div style={{ display: 'flex', gap: 10 }}>
+        <input
+          value={task}
+          onChange={e => setTask(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && generate()}
+          placeholder="e.g. Send weekly report to team..."
+          style={{ flex: 1, background: 'rgba(255,255,255,0.04)', border: '0.5px solid rgba(255,255,255,0.1)', borderRadius: 10, padding: '12px 16px', color: '#fff', fontFamily: 'Poppins, sans-serif', fontSize: 13, outline: 'none' }}
+        />
+        <motion.button whileTap={{ scale: 0.96 }} onClick={generate} disabled={loading || !task.trim()}
+          style={{ background: loading ? 'rgba(0,245,255,0.3)' : 'linear-gradient(135deg,#00F5FF,#7B61FF)', color: '#0B0F1A', border: 'none', padding: '12px 18px', borderRadius: 10, fontFamily: 'Poppins, sans-serif', fontSize: 13, fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap' }}>
+          {loading ? '...' : '⚡ Run'}
+        </motion.button>
+      </div>
+      {plan && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {plan.map((s, i) => (
+            <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.08 }}
+              style={{ display: 'flex', alignItems: 'center', gap: 12, background: executing === i ? 'rgba(0,245,255,0.08)' : i < executing || done ? 'rgba(0,255,100,0.05)' : 'rgba(255,255,255,0.02)', border: `0.5px solid ${executing === i ? 'rgba(0,245,255,0.4)' : i < executing || done ? 'rgba(0,255,100,0.3)' : 'rgba(255,255,255,0.07)'}`, borderRadius: 10, padding: '12px 16px', transition: 'all 0.3s' }}>
+              <div style={{ width: 22, height: 22, borderRadius: '50%', background: executing === i ? '#00F5FF' : i < executing || done ? '#00FF88' : 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: executing === i || i < executing || done ? '#0B0F1A' : 'rgba(255,255,255,0.4)', fontWeight: 700, flexShrink: 0, transition: 'all 0.3s' }}>
+                {executing === i ? '⟳' : i < executing || done ? '✓' : i + 1}
+              </div>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: executing === i ? '#00F5FF' : 'rgba(255,255,255,0.8)', fontFamily: 'Orbitron, monospace', fontSize: 11, letterSpacing: 0.5 }}>{s.step}</div>
+                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{s.action}</div>
+              </div>
+            </motion.div>
+          ))}
+          {done && (
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
+              style={{ textAlign: 'center', padding: '14px', background: 'rgba(0,255,100,0.05)', border: '0.5px solid rgba(0,255,100,0.3)', borderRadius: 10 }}>
+              <span style={{ color: '#00FF88', fontFamily: 'Orbitron, monospace', fontSize: 12, letterSpacing: 2 }}>✓ AUTOMATION COMPLETE</span>
+            </motion.div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── 3. MULTI-DEVICE INTEGRATION ──────────────────────────────────────────────
+function DeviceModal() {
+  const devices = [
+    { id: 'phone', icon: '📱', name: 'Mobile', type: 'iPhone 16 Pro' },
+    { id: 'laptop', icon: '💻', name: 'Laptop', type: 'MacBook Pro' },
+    { id: 'watch', icon: '⌚', name: 'Watch', type: 'Galaxy Watch 7' },
+    { id: 'tablet', icon: '📟', name: 'Tablet', type: 'iPad Pro' },
+    { id: 'tv', icon: '📺', name: 'Smart TV', type: 'Samsung 8K' },
+  ]
+  const [synced, setSynced] = useState(['phone'])
+  const [syncing, setSyncing] = useState(null)
+  const [payload, setPayload] = useState('{ "theme": "dark", "lang": "en", "ai_mode": "pro" }')
+  const [log, setLog] = useState([{ time: new Date().toLocaleTimeString(), msg: 'Device mesh initialized' }])
+
+  const addLog = (msg) => setLog(l => [{ time: new Date().toLocaleTimeString(), msg }, ...l.slice(0, 4)])
+
+  const toggle = async (id) => {
+    if (synced.includes(id)) {
+      setSynced(s => s.filter(x => x !== id))
+      addLog(`${devices.find(d => d.id === id).name} disconnected`)
+      return
+    }
+    setSyncing(id)
+    await new Promise(r => setTimeout(r, 900))
+    setSynced(s => [...s, id])
+    setSyncing(null)
+    addLog(`${devices.find(d => d.id === id).name} synced — state propagated`)
+  }
+
+  const syncAll = async () => {
+    for (const d of devices) {
+      if (!synced.includes(d.id)) {
+        setSyncing(d.id)
+        await new Promise(r => setTimeout(r, 500))
+        setSynced(s => [...s, d.id])
+        setSyncing(null)
+        addLog(`${d.name} joined the mesh`)
+      }
+    }
+    addLog('All devices synced — zero-latency mesh active')
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+        {devices.map(d => (
+          <motion.button key={d.id} whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }} onClick={() => toggle(d.id)}
+            style={{ flex: '1 1 80px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, padding: '14px 10px', background: synced.includes(d.id) ? 'rgba(0,245,255,0.08)' : 'rgba(255,255,255,0.02)', border: `0.5px solid ${synced.includes(d.id) ? 'rgba(0,245,255,0.4)' : 'rgba(255,255,255,0.1)'}`, borderRadius: 12, cursor: 'pointer', transition: 'all 0.2s', position: 'relative' }}>
+            {syncing === d.id && <motion.div animate={{ rotate: 360 }} transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }} style={{ position: 'absolute', inset: -1, borderRadius: 12, border: '1px solid transparent', borderTopColor: '#00F5FF' }} />}
+            <span style={{ fontSize: 22 }}>{d.icon}</span>
+            <span style={{ fontSize: 10, fontFamily: 'Orbitron, monospace', color: synced.includes(d.id) ? '#00F5FF' : 'rgba(255,255,255,0.4)', letterSpacing: 0.5 }}>{d.name}</span>
+            <span style={{ fontSize: 9, color: synced.includes(d.id) ? 'rgba(0,245,255,0.5)' : 'rgba(255,255,255,0.2)' }}>{synced.includes(d.id) ? '● LINKED' : '○ OFFLINE'}</span>
+          </motion.button>
+        ))}
+      </div>
+      <textarea value={payload} onChange={e => setPayload(e.target.value)}
+        style={{ background: 'rgba(0,0,0,0.3)', border: '0.5px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '10px 14px', color: 'rgba(0,245,255,0.7)', fontFamily: 'monospace', fontSize: 12, resize: 'none', outline: 'none', height: 60 }} />
+      <div style={{ display: 'flex', gap: 10 }}>
+        <motion.button whileTap={{ scale: 0.97 }} onClick={syncAll}
+          style={{ flex: 1, background: 'linear-gradient(135deg,#00F5FF,#7B61FF)', color: '#0B0F1A', border: 'none', padding: '11px', borderRadius: 10, fontFamily: 'Poppins,sans-serif', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
+          🔗 Sync All Devices
+        </motion.button>
+        <div style={{ flex: 1, background: 'rgba(255,255,255,0.02)', border: '0.5px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '8px 12px', overflow: 'hidden' }}>
+          {log.slice(0, 3).map((l, i) => (
+            <div key={i} style={{ fontSize: 10, color: i === 0 ? 'rgba(0,245,255,0.7)' : 'rgba(255,255,255,0.25)', fontFamily: 'monospace', marginBottom: 3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              [{l.time}] {l.msg}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', textAlign: 'center' }}>
+        {synced.length}/{devices.length} devices in mesh · State propagation: &lt;10ms
+      </div>
+    </div>
+  )
+}
+
+// ── 4. ADAPTIVE INTELLIGENCE ─────────────────────────────────────────────────
+function AdaptiveModal() {
+  const [memory, setMemory] = useState([])
+  const [input, setInput] = useState('')
+  const [reply, setReply] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [profile, setProfile] = useState({ interactions: 0, topics: [] })
+
+  const chat = async () => {
+    if (!input.trim()) return
+    setLoading(true)
+    const context = memory.map(m => `User said: "${m.user}". AI learned: "${m.insight}"`).join('\n')
+    try {
+      const res = await callAI(
+        `You are AIO AI's Adaptive Intelligence engine. You learn from every interaction.
+        ${context ? `\nWhat you've learned so far:\n${context}` : ''}
+        After your main response, on a NEW LINE, write exactly: LEARNED: [one short insight about this user's interests/style in under 10 words]`,
+        input
+      )
+      const [main, learnedLine] = res.split(/\nLEARNED:/i)
+      const insight = learnedLine?.trim() || 'User is curious and engaged'
+      setMemory(m => [...m, { user: input, insight }])
+      setReply(main.trim())
+      setProfile(p => ({ interactions: p.interactions + 1, topics: [...new Set([...p.topics, input.split(' ')[0]])] }))
+    } catch (e) { setReply('Error: ' + e.message) }
+    finally { setLoading(false); setInput('') }
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+        <div style={{ flex: '1 1 120px', background: 'rgba(0,245,255,0.05)', border: '0.5px solid rgba(0,245,255,0.2)', borderRadius: 10, padding: '10px 14px' }}>
+          <div style={{ fontSize: 9, color: 'rgba(0,245,255,0.5)', fontFamily: 'Orbitron,monospace', letterSpacing: 2, marginBottom: 4 }}>INTERACTIONS</div>
+          <div style={{ fontSize: 28, fontFamily: 'Orbitron,monospace', fontWeight: 900, color: '#00F5FF' }}>{profile.interactions}</div>
+        </div>
+        <div style={{ flex: '2 1 180px', background: 'rgba(123,97,255,0.05)', border: '0.5px solid rgba(123,97,255,0.2)', borderRadius: 10, padding: '10px 14px' }}>
+          <div style={{ fontSize: 9, color: 'rgba(123,97,255,0.5)', fontFamily: 'Orbitron,monospace', letterSpacing: 2, marginBottom: 6 }}>LEARNED ABOUT YOU</div>
+          {memory.length === 0 ? <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', fontStyle: 'italic' }}>No data yet — start chatting</div> : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+              {memory.slice(-3).map((m, i) => (
+                <div key={i} style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', display: 'flex', gap: 6 }}><span style={{ color: '#7B61FF' }}>›</span>{m.insight}</div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+      {reply && (
+        <div style={{ background: 'rgba(255,255,255,0.02)', border: '0.5px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '12px 16px', fontSize: 13, color: 'rgba(255,255,255,0.75)', lineHeight: 1.7 }}>{reply}</div>
+      )}
+      <div style={{ display: 'flex', gap: 10 }}>
+        <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && chat()}
+          placeholder="Talk to AIO AI — it remembers you..."
+          style={{ flex: 1, background: 'rgba(255,255,255,0.04)', border: '0.5px solid rgba(255,255,255,0.1)', borderRadius: 10, padding: '12px 16px', color: '#fff', fontFamily: 'Poppins,sans-serif', fontSize: 13, outline: 'none' }} />
+        <motion.button whileTap={{ scale: 0.96 }} onClick={chat} disabled={loading || !input.trim()}
+          style={{ background: loading ? 'rgba(123,97,255,0.3)' : 'linear-gradient(135deg,#7B61FF,#00F5FF)', color: '#0B0F1A', border: 'none', padding: '12px 18px', borderRadius: 10, fontFamily: 'Poppins,sans-serif', fontSize: 13, fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer' }}>
+          {loading ? '🧠' : 'Learn'}
+        </motion.button>
+      </div>
+    </div>
+  )
+}
+
+// ── 5. OFFLINE MODE ──────────────────────────────────────────────────────────
+function OfflineModal() {
+  const [isOnline, setIsOnline] = useState(navigator.onLine)
+  const [queue, setQueue] = useState([])
+  const [taskInput, setTaskInput] = useState('')
+  const [processing, setProcessing] = useState(false)
+  const [log, setLog] = useState([])
+
+  useEffect(() => {
+    const on = () => { setIsOnline(true); flushQueue() }
+    const off = () => setIsOnline(false)
+    window.addEventListener('online', on)
+    window.addEventListener('offline', off)
+    return () => { window.removeEventListener('online', on); window.removeEventListener('offline', off) }
+  }, [])
+
+  const flushQueue = async () => {
+    if (queue.length === 0) return
+    setProcessing(true)
+    for (const task of queue) {
+      await new Promise(r => setTimeout(r, 500))
+      setLog(l => [...l, { text: `✓ Processed: "${task}"`, color: '#00FF88' }])
+    }
+    setQueue([])
+    setProcessing(false)
+  }
+
+  const addTask = async () => {
+    if (!taskInput.trim()) return
+    if (!isOnline) {
+      setQueue(q => [...q, taskInput])
+      setLog(l => [...l, { text: `📦 Queued offline: "${taskInput}"`, color: '#FEBC2E' }])
+    } else {
+      setLog(l => [...l, { text: `⚡ Executed instantly: "${taskInput}"`, color: '#00F5FF' }])
+    }
+    setTaskInput('')
+  }
+
+  const simulate = () => {
+    setIsOnline(v => {
+      const next = !v
+      setLog(l => [...l, { text: next ? '🌐 Network restored — flushing queue...' : '📡 Network lost — offline mode active', color: next ? '#00FF88' : '#FF6B6B' }])
+      if (next && queue.length > 0) setTimeout(flushQueue, 300)
+      return next
+    })
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, background: isOnline ? 'rgba(0,255,100,0.06)' : 'rgba(255,100,100,0.06)', border: `0.5px solid ${isOnline ? 'rgba(0,255,100,0.3)' : 'rgba(255,100,100,0.3)'}`, borderRadius: 10, padding: '12px 16px' }}>
+          <motion.div animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 1.5, repeat: Infinity }} style={{ width: 10, height: 10, borderRadius: '50%', background: isOnline ? '#00FF88' : '#FF6B6B', flexShrink: 0 }} />
+          <div>
+            <div style={{ fontSize: 12, fontFamily: 'Orbitron,monospace', color: isOnline ? '#00FF88' : '#FF6B6B', letterSpacing: 1 }}>{isOnline ? 'ONLINE' : 'OFFLINE MODE ACTIVE'}</div>
+            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginTop: 2 }}>{isOnline ? 'Full connectivity · Cloud sync active' : `${queue.length} task${queue.length !== 1 ? 's' : ''} queued for sync`}</div>
+          </div>
+        </div>
+        <motion.button whileTap={{ scale: 0.95 }} onClick={simulate}
+          style={{ padding: '12px 14px', background: 'rgba(255,255,255,0.04)', border: '0.5px solid rgba(255,255,255,0.1)', borderRadius: 10, color: 'rgba(255,255,255,0.6)', fontFamily: 'Poppins,sans-serif', fontSize: 12, cursor: 'pointer' }}>
+          {isOnline ? '📴 Go Offline' : '🌐 Go Online'}
+        </motion.button>
+      </div>
+      <div style={{ display: 'flex', gap: 10 }}>
+        <input value={taskInput} onChange={e => setTaskInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && addTask()}
+          placeholder={isOnline ? 'Run a task...' : 'Queue a task for when online...'}
+          style={{ flex: 1, background: 'rgba(255,255,255,0.04)', border: '0.5px solid rgba(255,255,255,0.1)', borderRadius: 10, padding: '12px 16px', color: '#fff', fontFamily: 'Poppins,sans-serif', fontSize: 13, outline: 'none' }} />
+        <motion.button whileTap={{ scale: 0.96 }} onClick={addTask}
+          style={{ background: isOnline ? 'linear-gradient(135deg,#00F5FF,#7B61FF)' : 'linear-gradient(135deg,#FEBC2E,#FF6B6B)', color: '#0B0F1A', border: 'none', padding: '12px 18px', borderRadius: 10, fontFamily: 'Poppins,sans-serif', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
+          {isOnline ? '⚡ Run' : '📦 Queue'}
+        </motion.button>
+      </div>
+      {log.length > 0 && (
+        <div style={{ background: 'rgba(0,0,0,0.3)', border: '0.5px solid rgba(255,255,255,0.06)', borderRadius: 10, padding: '10px 14px', maxHeight: 120, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 4 }}>
+          {log.slice(-6).reverse().map((l, i) => (
+            <div key={i} style={{ fontSize: 12, color: l.color, fontFamily: 'monospace' }}>{l.text}</div>
+          ))}
+        </div>
+      )}
+      <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', textAlign: 'center' }}>
+        Local processing engine · Tasks auto-sync on reconnect
+      </div>
+    </div>
+  )
+}
+
+// ── 6. ANTI-GRAVITY INTERFACE ────────────────────────────────────────────────
+function AntiGravityModal() {
+  const [nodes, setNodes] = useState(() => [
+    { id: 1, label: '🧠 Neural', x: 160, y: 80, color: '#00F5FF' },
+    { id: 2, label: '📡 IoT', x: 280, y: 130, color: '#7B61FF' },
+    { id: 3, label: '⚡ Power', x: 100, y: 170, color: '#FEBC2E' },
+    { id: 4, label: '🔐 Secure', x: 230, y: 210, color: '#FF6B6B' },
+    { id: 5, label: '☁️ Cloud', x: 310, y: 80, color: '#00FF88' },
+  ])
+  const [dragging, setDragging] = useState(null)
+  const [offset, setOffset] = useState({ x: 0, y: 0 })
+  const [active, setActive] = useState(null)
+  const svgRef = useRef(null)
+
+  // ── .env config panel state ──────────────────────────────────────────────
+  const [tab, setTab] = useState('spatial') // 'spatial' | 'env'
+  const [envKey, setEnvKey] = useState('')
+  const [envPort, setEnvPort] = useState('5001')
+  const [showKey, setShowKey] = useState(false)
+  const [envStatus, setEnvStatus] = useState(null) // null | 'saving' | 'ok' | 'error'
+
+  const saveEnv = async () => {
+    if (!envKey.trim()) return
+    setEnvStatus('saving')
+    try {
+      const res = await fetch('/api/env', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ GEMINI_API_KEY: envKey.trim(), PORT: envPort }),
+      })
+      if (!res.ok) throw new Error('server')
+      setEnvStatus('ok')
+    } catch {
+      // fallback: copy to clipboard
+      navigator.clipboard.writeText(`GEMINI_API_KEY=${envKey.trim()}\nPORT=${envPort}`)
+      setEnvStatus('copied')
+    }
+    setTimeout(() => setEnvStatus(null), 3000)
+  }
+
+  const onMouseDown = (e, id) => {
+    e.preventDefault()
+    const rect = svgRef.current.getBoundingClientRect()
+    const node = nodes.find(n => n.id === id)
+    setDragging(id)
+    setActive(id)
+    setOffset({ x: e.clientX - rect.left - node.x, y: e.clientY - rect.top - node.y })
+  }
+
+  const onMouseMove = useCallback((e) => {
+    if (!dragging || !svgRef.current) return
+    const rect = svgRef.current.getBoundingClientRect()
+    const x = Math.max(30, Math.min(370, e.clientX - rect.left - offset.x))
+    const y = Math.max(30, Math.min(250, e.clientY - rect.top - offset.y))
+    setNodes(ns => ns.map(n => n.id === dragging ? { ...n, x, y } : n))
+  }, [dragging, offset])
+
+  const onMouseUp = () => setDragging(null)
+
+  useEffect(() => {
+    window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('mouseup', onMouseUp)
+    return () => { window.removeEventListener('mousemove', onMouseMove); window.removeEventListener('mouseup', onMouseUp) }
+  }, [onMouseMove])
+
+  const connections = []
+  for (let i = 0; i < nodes.length; i++)
+    for (let j = i + 1; j < nodes.length; j++)
+      connections.push([nodes[i], nodes[j]])
+
+  const statusColor = { ok: '#00FF88', error: '#FF6B6B', copied: '#00F5FF', saving: '#7B61FF' }
+  const statusLabel = { ok: '✓ SAVED TO .env', error: '✗ SAVE FAILED', copied: '📋 COPIED TO CLIPBOARD', saving: '⟳ SAVING...' }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+
+      {/* Tab switcher */}
+      <div style={{ display: 'flex', gap: 6, background: 'rgba(0,0,0,0.3)', borderRadius: 10, padding: 4 }}>
+        {[{ id: 'spatial', label: '🚀 Spatial UI' }, { id: 'env', label: '⚙️ .env Config' }].map(t => (
+          <button key={t.id} onClick={() => setTab(t.id)}
+            style={{
+              flex: 1, padding: '8px 0', border: 'none', borderRadius: 7, cursor: 'pointer', fontFamily: 'Orbitron,monospace', fontSize: 9, letterSpacing: 1.5,
+              background: tab === t.id ? 'rgba(0,245,255,0.12)' : 'transparent',
+              color: tab === t.id ? '#00F5FF' : 'rgba(255,255,255,0.35)',
+              borderBottom: tab === t.id ? '1.5px solid #00F5FF' : '1.5px solid transparent',
+              transition: 'all 0.2s'
+            }}>
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {/* ── Spatial tab ── */}
+      {tab === 'spatial' && (
+        <>
+          <div style={{ fontFamily: 'Orbitron,monospace', fontSize: 9, letterSpacing: 3, color: 'rgba(0,245,255,0.5)', textAlign: 'center' }}>
+            SPATIAL INTERFACE — DRAG NODES TO RECONFIGURE
+          </div>
+          <svg ref={svgRef} width="100%" viewBox="0 0 400 280"
+            style={{ background: 'rgba(0,0,0,0.3)', border: '0.5px solid rgba(0,245,255,0.1)', borderRadius: 14, cursor: dragging ? 'grabbing' : 'default', userSelect: 'none' }}>
+            {Array.from({ length: 10 }, (_, i) => (
+              <line key={`v${i}`} x1={i * 44} y1={0} x2={i * 44} y2={280} stroke="rgba(0,245,255,0.04)" strokeWidth={0.5} />
+            ))}
+            {Array.from({ length: 7 }, (_, i) => (
+              <line key={`h${i}`} x1={0} y1={i * 44} x2={400} y2={i * 44} stroke="rgba(0,245,255,0.04)" strokeWidth={0.5} />
+            ))}
+            {connections.map(([a, b], i) => {
+              const dist = Math.hypot(b.x - a.x, b.y - a.y)
+              const alpha = Math.max(0, 1 - dist / 260)
+              return (
+                <line key={i} x1={a.x} y1={a.y} x2={b.x} y2={b.y}
+                  stroke={`rgba(0,245,255,${(alpha * 0.4).toFixed(2)})`} strokeWidth={alpha > 0.3 ? 1 : 0.3} />
+              )
+            })}
+            {nodes.map(n => (
+              <g key={n.id} transform={`translate(${n.x},${n.y})`}
+                onMouseDown={e => onMouseDown(e, n.id)} style={{ cursor: 'grab' }}>
+                {active === n.id && <circle r={28} fill={`${n.color}18`} />}
+                <circle r={18} fill={`${n.color}22`} stroke={n.color} strokeWidth={active === n.id ? 1.5 : 0.8} />
+                <circle r={5} fill={n.color} />
+                <foreignObject x={-30} y={22} width={60} height={20}>
+                  <div style={{ fontSize: 9, color: n.color, fontFamily: 'Orbitron,monospace', textAlign: 'center', letterSpacing: 0.5, whiteSpace: 'nowrap' }}>{n.label}</div>
+                </foreignObject>
+              </g>
+            ))}
+          </svg>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            {nodes.map(n => (
+              <div key={n.id} style={{ fontSize: 10, padding: '4px 10px', borderRadius: 20, background: `${n.color}18`, border: `0.5px solid ${n.color}66`, color: n.color, fontFamily: 'Orbitron,monospace', letterSpacing: 0.5 }}>
+                {n.label} · {Math.round(n.x)},{Math.round(n.y)}
+              </div>
+            ))}
+          </div>
+          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', textAlign: 'center' }}>
+            3D spatial UI · Drag nodes · Connection strength = proximity
+          </div>
+        </>
+      )}
+
+      {/* ── .env Config tab ── */}
+      {tab === 'env' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <div style={{ background: 'rgba(0,0,0,0.35)', border: '0.5px solid rgba(0,245,255,0.15)', borderRadius: 12, padding: '14px 16px' }}>
+            <div style={{ fontSize: 9, fontFamily: 'Orbitron,monospace', letterSpacing: 2, color: 'rgba(0,245,255,0.5)', marginBottom: 10 }}>// .env CONFIGURATION</div>
+
+            {/* API Key field */}
+            <div style={{ marginBottom: 12 }}>
+              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', marginBottom: 6 }}>GEMINI_API_KEY</div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <input
+                  type={showKey ? 'text' : 'password'}
+                  value={envKey}
+                  onChange={e => setEnvKey(e.target.value)}
+                  placeholder="AIzaSy..."
+                  style={{ flex: 1, background: 'rgba(255,255,255,0.04)', border: '0.5px solid rgba(0,245,255,0.2)', borderRadius: 8, padding: '10px 12px', color: '#00F5FF', fontFamily: 'monospace', fontSize: 12, outline: 'none', letterSpacing: showKey ? 0 : 2 }}
+                />
+                <button onClick={() => setShowKey(v => !v)}
+                  style={{ padding: '0 12px', background: 'rgba(255,255,255,0.04)', border: '0.5px solid rgba(255,255,255,0.1)', borderRadius: 8, color: 'rgba(255,255,255,0.5)', cursor: 'pointer', fontSize: 14 }}>
+                  {showKey ? '🙈' : '👁'}
+                </button>
+              </div>
+            </div>
+
+            {/* PORT field */}
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', marginBottom: 6 }}>PORT</div>
+              <input
+                type="text"
+                value={envPort}
+                onChange={e => setEnvPort(e.target.value)}
+                style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '0.5px solid rgba(123,97,255,0.2)', borderRadius: 8, padding: '10px 12px', color: '#7B61FF', fontFamily: 'monospace', fontSize: 12, outline: 'none' }}
+              />
+            </div>
+
+            {/* Preview */}
+            <div style={{ background: 'rgba(0,0,0,0.4)', border: '0.5px solid rgba(255,255,255,0.06)', borderRadius: 8, padding: '10px 14px', fontFamily: 'monospace', fontSize: 11, lineHeight: 1.8, marginBottom: 14 }}>
+              <span style={{ color: 'rgba(255,255,255,0.25)' }}># .env preview</span><br />
+              <span style={{ color: '#00F5FF' }}>GEMINI_API_KEY</span>
+              <span style={{ color: 'rgba(255,255,255,0.4)' }}>=</span>
+              <span style={{ color: '#00FF88' }}>{envKey ? (showKey ? envKey : 'AIzaSy' + '•'.repeat(Math.max(0, envKey.length - 6))) : '<your-key>'}</span><br />
+              <span style={{ color: '#00F5FF' }}>PORT</span>
+              <span style={{ color: 'rgba(255,255,255,0.4)' }}>=</span>
+              <span style={{ color: '#FEBC2E' }}>{envPort}</span>
+            </div>
+
+            {/* Actions */}
+            <div style={{ display: 'flex', gap: 8 }}>
+              <motion.button whileTap={{ scale: 0.96 }} onClick={saveEnv} disabled={!envKey.trim() || envStatus === 'saving'}
+                style={{ flex: 2, background: envKey.trim() ? 'linear-gradient(135deg,#00F5FF,#7B61FF)' : 'rgba(255,255,255,0.05)', color: envKey.trim() ? '#0B0F1A' : 'rgba(255,255,255,0.2)', border: 'none', padding: '11px', borderRadius: 9, fontFamily: 'Poppins,sans-serif', fontSize: 13, fontWeight: 600, cursor: envKey.trim() ? 'pointer' : 'not-allowed', transition: 'all 0.2s' }}>
+                {envStatus === 'saving' ? 'Saving...' : '💾 Save & Apply'}
+              </motion.button>
+              <motion.button whileTap={{ scale: 0.96 }} onClick={() => { navigator.clipboard.writeText(`GEMINI_API_KEY=${envKey}\nPORT=${envPort}`); setEnvStatus('copied'); setTimeout(() => setEnvStatus(null), 2500) }}
+                style={{ flex: 1, background: 'rgba(255,255,255,0.04)', border: '0.5px solid rgba(255,255,255,0.1)', padding: '11px', borderRadius: 9, color: 'rgba(255,255,255,0.5)', fontFamily: 'Poppins,sans-serif', fontSize: 13, cursor: 'pointer' }}>
+                📋 Copy
+              </motion.button>
+            </div>
+
+            {envStatus && (
+              <motion.div initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
+                style={{ marginTop: 10, textAlign: 'center', fontFamily: 'Orbitron,monospace', fontSize: 10, letterSpacing: 2, color: statusColor[envStatus] }}>
+                {statusLabel[envStatus]}
+              </motion.div>
+            )}
+          </div>
+
+          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', textAlign: 'center', lineHeight: 1.7 }}>
+            Get your key at <span style={{ color: '#00F5FF' }}>aistudio.google.com/app/apikey</span><br />
+            Then paste it into <span style={{ color: '#7B61FF', fontFamily: 'monospace' }}>.env</span> or use 📋 Copy and create the file manually
+          </div>
+        </div>
+      )}
+
+    </div>
+  )
+}
+
+// ── MODAL WRAPPER ────────────────────────────────────────────────────────────
+function Modal({ feature, onClose }) {
+  useEffect(() => {
+    const esc = (e) => e.key === 'Escape' && onClose()
+    window.addEventListener('keydown', esc)
+    return () => window.removeEventListener('keydown', esc)
+  }, [onClose])
+
+  const PANELS = {
+    voice: <VoiceModal />,
+    automation: <AutomationModal />,
+    devices: <DeviceModal />,
+    adaptive: <AdaptiveModal />,
+    offline: <OfflineModal />,
+    antigravity: <AntiGravityModal />,
+  }
+
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      onClick={onClose}
+      style={{ position: 'fixed', inset: 0, zIndex: 2000, background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+      <motion.div initial={{ opacity: 0, y: 30, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 20, scale: 0.95 }}
+        transition={{ type: 'spring', stiffness: 280, damping: 26 }}
+        onClick={e => e.stopPropagation()}
+        style={{ width: '100%', maxWidth: 520, background: '#0D1120', border: `0.5px solid ${feature.borderColor}`, borderRadius: 20, padding: 28, maxHeight: '90vh', overflowY: 'auto', position: 'relative' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 20 }}>
+          <div>
+            <div style={{ fontSize: 28, marginBottom: 8 }}>{feature.icon}</div>
+            <h3 style={{ fontFamily: 'Orbitron,monospace', fontSize: 16, fontWeight: 700, marginBottom: 4 }}>{feature.title}</h3>
+            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontWeight: 300, lineHeight: 1.5, maxWidth: 360 }}>{feature.desc}</p>
+          </div>
+          <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={onClose}
+            style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(255,255,255,0.06)', border: '0.5px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)', fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            ×
+          </motion.button>
+        </div>
+        <div style={{ borderTop: '0.5px solid rgba(255,255,255,0.06)', paddingTop: 20 }}>
+          {PANELS[feature.id]}
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
+// ── MAIN FEATURES COMPONENT ──────────────────────────────────────────────────
+const features = [
+  { id: 'voice', icon: '🎙️', title: 'Voice Assistant', desc: 'Neural STT + TTS with real-time processing. Hands-free command in 40+ languages with contextual awareness.', borderColor: 'rgba(0,245,255,0.25)', badge: 'LIVE MIC + AI' },
+  { id: 'automation', icon: '⚡', title: 'Smart Automation', desc: 'Context-aware task automation that learns your patterns and executes decisions proactively without prompting.', borderColor: 'rgba(0,245,255,0.25)', badge: 'AI POWERED' },
+  { id: 'devices', icon: '🔗', title: 'Multi-Device Integration', desc: 'Seamless sync across all connected devices with zero-latency state management and unified control plane.', borderColor: 'rgba(123,97,255,0.25)', badge: 'LIVE SYNC' },
+  { id: 'adaptive', icon: '🧠', title: 'Adaptive Intelligence', desc: 'On-device ML models that evolve with each interaction — smarter every day, entirely private, entirely yours.', borderColor: 'rgba(123,97,255,0.25)', badge: 'LEARNS YOU' },
+  { id: 'offline', icon: '📡', title: 'Offline Mode', desc: 'Full core functionality without internet. Local processing keeps you operational anywhere on the planet.', borderColor: 'rgba(0,245,255,0.25)', badge: 'REAL NETWORK' },
+  { id: 'antigravity', icon: '🚀', title: 'Anti-Gravity Interface', desc: 'Spatial UI technology projecting controls into 3D space — the first interface to eliminate physical constraints.', borderColor: 'rgba(123,97,255,0.25)', badge: 'INTERACTIVE 3D' },
+]
+
+export default function Features() {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+  const [active, setActive] = useState(null)
+
+  return (
+    <section id="features" ref={ref} style={{ padding: '100px 40px', maxWidth: 1100, margin: '0 auto' }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}>
+        <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 10, letterSpacing: 4, color: '#00F5FF', marginBottom: 12 }}>// CAPABILITIES</div>
+        <h2 style={{ fontFamily: 'Orbitron, monospace', fontSize: 'clamp(24px,3vw,40px)', fontWeight: 700, marginBottom: 14 }}>
+          Core <span style={{ color: '#00F5FF' }}>Features</span>
+        </h2>
+        <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.45)', maxWidth: 480, lineHeight: 1.7, marginBottom: 16, fontWeight: 300 }}>
+          Engineered with adaptive intelligence across every layer of human-machine interaction.
+        </p>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(0,245,255,0.06)', border: '0.5px solid rgba(0,245,255,0.2)', borderRadius: 20, padding: '5px 14px', marginBottom: 48 }}>
+          <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#00F5FF', display: 'inline-block', animation: 'pulse 1.2s ease-in-out infinite' }} />
+          <span style={{ fontFamily: 'Orbitron,monospace', fontSize: 9, letterSpacing: 2, color: '#00F5FF' }}>CLICK ANY FEATURE TO ACTIVATE</span>
+        </div>
+      </motion.div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
+        {features.map((f, i) => (
+          <motion.div key={f.id}
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+            whileHover={{ y: -6, borderColor: f.borderColor, background: 'rgba(0,245,255,0.04)' }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setActive(f)}
+            style={{ background: 'rgba(255,255,255,0.02)', border: '0.5px solid rgba(255,255,255,0.07)', borderRadius: 16, padding: '32px 28px', cursor: 'pointer', transition: 'all 0.3s ease', position: 'relative', overflow: 'hidden' }}
+          >
+            <div style={{ position: 'absolute', top: 12, right: 12, background: 'rgba(0,245,255,0.08)', border: '0.5px solid rgba(0,245,255,0.2)', borderRadius: 20, padding: '3px 10px', fontFamily: 'Orbitron,monospace', fontSize: 8, letterSpacing: 1.5, color: '#00F5FF' }}>
+              {f.badge}
+            </div>
+            <div style={{ fontSize: 32, marginBottom: 18, filter: 'drop-shadow(0 0 10px rgba(0,245,255,0.4))' }}>{f.icon}</div>
+            <h3 style={{ fontFamily: 'Orbitron, monospace', fontSize: 13, fontWeight: 700, marginBottom: 12, letterSpacing: 0.5 }}>{f.title}</h3>
+            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', lineHeight: 1.65, fontWeight: 300, marginBottom: 20 }}>{f.desc}</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#00F5FF', fontSize: 12, fontFamily: 'Orbitron,monospace', letterSpacing: 1 }}>
+              <span>LAUNCH</span>
+              <span>→</span>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      <AnimatePresence>
+        {active && <Modal feature={active} onClose={() => setActive(null)} />}
+      </AnimatePresence>
+
+      <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}`}</style>
+    </section>
+  )
+}
+
+
+// ==========================================
+// FILE: src/components/Pricing.jsx
+// ==========================================
+
+import { useRef, useState } from 'react'
+import { motion, useInView } from 'framer-motion'
+
+const plans = [
+  {
+    name: 'Starter', price: { monthly: 0, yearly: 0 }, color: 'rgba(255,255,255,0.1)',
+    features: ['5,000 AI queries/mo', 'Voice assistant (basic)', '2 device sync', 'Community support'],
+    cta: 'Get Started', popular: false,
+  },
+  {
+    name: 'Pro', price: { monthly: 49, yearly: 39 }, color: '#00F5FF',
+    features: ['Unlimited AI queries', 'Voice assistant (advanced)', '20 device sync', 'Smart automation', 'Priority support', 'Offline mode'],
+    cta: 'Go Pro', popular: true,
+  },
+  {
+    name: 'Enterprise', price: { monthly: 199, yearly: 159 }, color: '#7B61FF',
+    features: ['Unlimited everything', 'Anti-gravity interface beta', 'Unlimited devices', 'Dedicated AI nodes', '24/7 concierge support', 'Custom integrations', 'SLA guarantee'],
+    cta: 'Contact Sales', popular: false,
+  },
+]
+
+export default function Pricing() {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const [yearly, setYearly] = useState(false)
+
+  return (
+    <section id="pricing" ref={ref} style={{ padding: '100px 40px', maxWidth: 1100, margin: '0 auto' }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} style={{ textAlign: 'center', marginBottom: 56 }}>
+        <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 10, letterSpacing: 4, color: '#7B61FF', marginBottom: 12 }}>// PRICING</div>
+        <h2 style={{ fontFamily: 'Orbitron, monospace', fontSize: 'clamp(24px,3vw,40px)', fontWeight: 700, marginBottom: 14 }}>
+          Choose Your <span style={{ color: '#7B61FF' }}>Intelligence Level</span>
+        </h2>
+        <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.45)', maxWidth: 420, margin: '0 auto 28px', lineHeight: 1.7, fontWeight: 300 }}>
+          Scale your intelligence from zero to enterprise-grade anti-gravity systems.
+        </p>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, background: 'rgba(255,255,255,0.04)', border: '0.5px solid rgba(255,255,255,0.08)', borderRadius: 40, padding: '6px 20px' }}>
+          <span style={{ fontSize: 13, color: yearly ? 'rgba(255,255,255,0.4)' : '#fff' }}>Monthly</span>
+          <div onClick={() => setYearly(y => !y)} style={{ width: 40, height: 22, borderRadius: 11, background: yearly ? '#7B61FF' : 'rgba(255,255,255,0.15)', cursor: 'pointer', position: 'relative', transition: 'background 0.3s' }}>
+            <div style={{ position: 'absolute', top: 3, left: yearly ? 21 : 3, width: 16, height: 16, borderRadius: '50%', background: '#fff', transition: 'left 0.3s' }} />
+          </div>
+          <span style={{ fontSize: 13, color: yearly ? '#fff' : 'rgba(255,255,255,0.4)' }}>Yearly <span style={{ color: '#00F5FF', fontSize: 11 }}>-20%</span></span>
+        </div>
+      </motion.div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', gap: 20 }}>
+        {plans.map((plan, i) => (
+          <motion.div
+            key={plan.name}
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+            style={{
+              background: plan.popular ? 'rgba(0,245,255,0.04)' : 'rgba(255,255,255,0.02)',
+              border: `${plan.popular ? '1.5px' : '0.5px'} solid ${plan.popular ? 'rgba(0,245,255,0.35)' : 'rgba(255,255,255,0.07)'}`,
+              borderRadius: 20, padding: '36px 28px',
+              position: 'relative',
+            }}
+          >
+            {plan.popular && (
+              <div style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', background: 'linear-gradient(135deg, #00F5FF, #7B61FF)', color: '#0B0F1A', fontSize: 11, fontWeight: 600, padding: '4px 16px', borderRadius: 20, whiteSpace: 'nowrap', fontFamily: 'Orbitron, monospace', letterSpacing: 1 }}>MOST POPULAR</div>
+            )}
+            <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 14, fontWeight: 700, marginBottom: 8, color: plan.color }}>{plan.name}</div>
+            <div style={{ fontFamily: 'Orbitron, monospace', marginBottom: 24 }}>
+              <span style={{ fontSize: 40, fontWeight: 900 }}>${yearly ? plan.price.yearly : plan.price.monthly}</span>
+              <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', marginLeft: 4 }}>/mo</span>
+            </div>
+            <div style={{ borderTop: '0.5px solid rgba(255,255,255,0.07)', paddingTop: 20, marginBottom: 28 }}>
+              {plan.features.map(f => (
+                <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12, fontSize: 13, color: 'rgba(255,255,255,0.65)', fontWeight: 300 }}>
+                  <span style={{ color: plan.color, fontSize: 14 }}>✓</span> {f}
+                </div>
+              ))}
+            </div>
+            <motion.button
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              style={{
+                width: '100%',
+                background: plan.popular ? 'linear-gradient(135deg, #00F5FF, #7B61FF)' : 'transparent',
+                color: plan.popular ? '#0B0F1A' : plan.color,
+                border: `0.5px solid ${plan.popular ? 'transparent' : plan.color}`,
+                padding: '13px', borderRadius: 10,
+                fontFamily: 'Poppins, sans-serif', fontSize: 14, fontWeight: 600,
+                cursor: 'pointer',
+              }}
+            >
+              {plan.cta}
+            </motion.button>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+
+// ==========================================
+// FILE: src/components/Navbar.jsx
+// ==========================================
+
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
+
+const links = ['Home', 'Features', 'Demo', 'Pricing', 'Contact']
+
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const scrollTo = (id) => {
+    document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  return (
+    <motion.nav
+      initial={{ y: -60, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 2.7, duration: 0.5 }}
+      style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        padding: '14px 40px',
+        background: scrolled ? 'rgba(11,15,26,0.85)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(20px)' : 'none',
+        borderBottom: scrolled ? '0.5px solid rgba(0,245,255,0.12)' : 'none',
+        transition: 'all 0.3s ease',
+      }}
+    >
+      <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 20, fontWeight: 900, color: '#00F5FF', letterSpacing: 2, textShadow: '0 0 20px rgba(0,245,255,0.5)' }}>
+        AIO AI
+      </div>
+      <div style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
+        {links.map(link => (
+          <button key={link} onClick={() => scrollTo(link)}
+            style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', fontFamily: 'Poppins, sans-serif', fontSize: 13, cursor: 'pointer', transition: 'color 0.2s', letterSpacing: 0.5 }}
+            onMouseEnter={e => e.target.style.color = '#00F5FF'}
+            onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.6)'}
+          >
+            {link}
+          </button>
+        ))}
+        <button
+          onClick={() => scrollTo('Demo')}
+          style={{
+            background: 'linear-gradient(135deg, #00F5FF, #7B61FF)',
+            color: '#0B0F1A', border: 'none',
+            padding: '9px 20px', borderRadius: 8,
+            fontFamily: 'Poppins, sans-serif', fontSize: 13, fontWeight: 600,
+            cursor: 'pointer', letterSpacing: 0.5,
+          }}
+        >
+          Try Demo
+        </button>
+      </div>
+    </motion.nav>
+  )
+}
+
+
+// ==========================================
+// FILE: src/components/Hero.jsx
+// ==========================================
+
+import { useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
+
+const words = ['Intelligence', 'Automation', 'Innovation', 'Evolution']
+
+export default function Hero() {
+  const [wordIdx, setWordIdx] = useState(0)
+  const particlesRef = useRef(null)
+
+  useEffect(() => {
+    const t = setInterval(() => setWordIdx(i => (i + 1) % words.length), 2200)
+    return () => clearInterval(t)
+  }, [])
+
+  useEffect(() => {
+    const container = particlesRef.current
+    if (!container) return
+    const particles = []
+    for (let i = 0; i < 40; i++) {
+      const p = document.createElement('div')
+      p.style.cssText = `
+        position:absolute;border-radius:50%;pointer-events:none;
+        width:${1 + Math.random() * 2}px;height:${1 + Math.random() * 2}px;
+        background:${Math.random() > 0.5 ? '#00F5FF' : '#7B61FF'};
+        left:${Math.random() * 100}%;
+        animation:floatUp ${4 + Math.random() * 8}s ${Math.random() * 6}s linear infinite;
+        opacity:0;
+      `
+      container.appendChild(p)
+      particles.push(p)
+    }
+    const style = document.createElement('style')
+    style.textContent = `
+      @keyframes floatUp {
+        0%{transform:translateY(100vh) scale(0);opacity:0}
+        10%{opacity:0.8}90%{opacity:0.3}
+        100%{transform:translateY(-10vh) scale(1.5);opacity:0}
+      }
+    `
+    document.head.appendChild(style)
+    return () => { particles.forEach(p => p.remove()); style.remove() }
+  }, [])
+
+  return (
+    <section id="home" style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', padding: '80px 32px', overflow: 'hidden' }}>
+      {/* Background */}
+      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 40%, rgba(123,97,255,0.15) 0%, rgba(0,245,255,0.05) 40%, transparent 70%)' }} />
+      <div style={{ position: 'absolute', width: 400, height: 400, borderRadius: '50%', background: 'rgba(123,97,255,0.08)', filter: 'blur(80px)', top: -100, right: -100, animation: 'orb1 9s ease-in-out infinite alternate' }} />
+      <div style={{ position: 'absolute', width: 300, height: 300, borderRadius: '50%', background: 'rgba(0,245,255,0.06)', filter: 'blur(60px)', bottom: 80, left: -80, animation: 'orb2 12s ease-in-out infinite alternate' }} />
+
+      <style>{`
+        @keyframes orb1{from{transform:translate(0,0)}to{transform:translate(30px,-40px)}}
+        @keyframes orb2{from{transform:translate(0,0)}to{transform:translate(-20px,30px)}}
+      `}</style>
+
+      <div ref={particlesRef} style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }} />
+
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 2.8, duration: 0.7 }}
+        style={{ position: 'relative', zIndex: 2 }}
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 2.9, duration: 0.5 }}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(0,245,255,0.08)', border: '0.5px solid rgba(0,245,255,0.3)', color: '#00F5FF', fontSize: 10, letterSpacing: 3, padding: '7px 18px', borderRadius: 20, marginBottom: 28, fontFamily: 'Orbitron, monospace' }}
+        >
+          <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#00F5FF', animation: 'pulse 1.2s ease-in-out infinite', display: 'inline-block' }} />
+          NEXT-GEN INTELLIGENCE SYSTEM
+        </motion.div>
+
+        <h1 style={{ fontFamily: 'Orbitron, monospace', fontSize: 'clamp(30px, 5.5vw, 64px)', fontWeight: 900, lineHeight: 1.1, marginBottom: 20, letterSpacing: -1 }}>
+          Redefining<br />
+          <span style={{ color: '#00F5FF', textShadow: '0 0 40px rgba(0,245,255,0.4)' }}>
+            <motion.span
+              key={wordIdx}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              style={{ display: 'inline-block' }}
+            >
+              {words[wordIdx]}
+            </motion.span>
+          </span>
+          {' '}
+          <span style={{ color: '#7B61FF', textShadow: '0 0 40px rgba(123,97,255,0.4)' }}>Beyond Gravity</span>
+        </h1>
+
+        <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.55)', maxWidth: 520, lineHeight: 1.8, marginBottom: 44, fontWeight: 300, margin: '0 auto 44px' }}>
+          A combined intelligence system fusing AI, IoT, and Anti-Gravity technology — engineered for a world that hasn't been built yet.
+        </p>
+
+        <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <motion.button
+            whileHover={{ y: -2, boxShadow: '0 10px 40px rgba(0,245,255,0.35)' }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+            style={{ background: 'linear-gradient(135deg, #00F5FF, #7B61FF)', color: '#0B0F1A', border: 'none', padding: '15px 36px', borderRadius: 10, fontFamily: 'Poppins, sans-serif', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}
+          >
+            Explore System
+          </motion.button>
+          <motion.button
+            whileHover={{ borderColor: '#00F5FF', color: '#00F5FF' }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' })}
+            style={{ background: 'transparent', color: '#fff', border: '0.5px solid rgba(255,255,255,0.3)', padding: '15px 36px', borderRadius: 10, fontFamily: 'Poppins, sans-serif', fontSize: 15, fontWeight: 400, cursor: 'pointer', transition: 'all 0.2s' }}
+          >
+            Try Live Demo
+          </motion.button>
+        </div>
+      </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 1.8, repeat: Infinity }}
+        style={{ position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.25)' }}
+      >
+        <div style={{ fontSize: 11, letterSpacing: 2, fontFamily: 'Orbitron, monospace' }}>SCROLL</div>
+        <div style={{ width: 1, height: 40, background: 'linear-gradient(to bottom, rgba(0,245,255,0.4), transparent)' }} />
+      </motion.div>
+
+      <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}`}</style>
+    </section>
+  )
+}
+
+
+// ==========================================
+// FILE: src/components/LoadingScreen.jsx
+// ==========================================
+
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+
+const steps = [
+  'Initializing Intelligence Core...',
+  'Calibrating Anti-Gravity Systems...',
+  'Connecting Neural Networks...',
+  'AIO AI Online.',
+]
+
+export default function LoadingScreen() {
+  const [step, setStep] = useState(0)
+  const [progress, setProgress] = useState(0)
+  const [done, setDone] = useState(false)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(p => {
+        if (p >= 100) { clearInterval(interval); setDone(true); return 100 }
+        return p + 2
+      })
+    }, 40)
+    return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    if (progress > 25 && step < 1) setStep(1)
+    if (progress > 55 && step < 2) setStep(2)
+    if (progress > 80 && step < 3) setStep(3)
+  }, [progress, step])
+
+  return (
+    <AnimatePresence>
+      {!done && (
+        <motion.div
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { duration: 0.5 } }}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 9999,
+            background: '#0B0F1A',
+            display: 'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center', gap: 24,
+          }}
+        >
+          <motion.div
+            animate={{ scale: [1, 1.08, 1], opacity: [1, 0.5, 1] }}
+            transition={{ duration: 1.2, repeat: Infinity }}
+            style={{ fontFamily: 'Orbitron, monospace', fontSize: 42, fontWeight: 900, color: '#00F5FF', letterSpacing: 4, textShadow: '0 0 40px rgba(0,245,255,0.7)' }}
+          >
+            AIO AI
+          </motion.div>
+
+          <div style={{ width: 260, height: 2, background: 'rgba(255,255,255,0.08)', borderRadius: 2, overflow: 'hidden' }}>
+            <motion.div
+              animate={{ width: `${progress}%` }}
+              transition={{ ease: 'linear' }}
+              style={{ height: '100%', background: 'linear-gradient(90deg, #00F5FF, #7B61FF)', borderRadius: 2 }}
+            />
+          </div>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={step}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              style={{ fontFamily: 'Orbitron, monospace', fontSize: 11, letterSpacing: 3, color: 'rgba(0,245,255,0.7)' }}
+            >
+              {steps[step]}
+            </motion.div>
+          </AnimatePresence>
+
+          <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 10, color: 'rgba(255,255,255,0.2)', letterSpacing: 2 }}>
+            {progress}%
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+
+// ==========================================
+// FILE: src/components/Contact.jsx
+// ==========================================
+
+import { useRef, useState } from 'react'
+import { motion, useInView } from 'framer-motion'
+
+export default function Contact() {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const [sent, setSent] = useState(false)
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
+
+  const handleSubmit = () => {
+    if (!form.name || !form.email || !form.message) return;
+
+    const subject = encodeURIComponent(`AIO AI Inquiry from ${form.name}`)
+    const body = encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`
+    )
+    window.location.href = `mailto:hariashwin6969@gmail.com?subject=${subject}&body=${body}`
+    setSent(true)
+  };
+
+  const handleWhatsApp = () => {
+    const text = encodeURIComponent(`Hi, I'd like to get in touch with the AIO AI developer.`)
+    window.open(`https://wa.me/916374142808?text=${text}`, '_blank')
+  };
+
+  const inputStyle = {
+    width: '100%', background: 'rgba(255,255,255,0.04)',
+    border: '0.5px solid rgba(255,255,255,0.1)',
+    borderRadius: 10, padding: '14px 18px',
+    color: '#fff', fontFamily: 'Poppins, sans-serif', fontSize: 14,
+    outline: 'none', transition: 'border-color 0.2s',
+  }
+
+  return (
+    <section id="contact" ref={ref} style={{ padding: '100px 40px', maxWidth: 680, margin: '0 auto' }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}>
+        <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 10, letterSpacing: 4, color: '#00F5FF', marginBottom: 12 }}>// CONTACT</div>
+        <h2 style={{ fontFamily: 'Orbitron, monospace', fontSize: 'clamp(24px,3vw,40px)', fontWeight: 700, marginBottom: 14 }}>
+          Get In <span style={{ color: '#00F5FF' }}>Touch</span>
+        </h2>
+        <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.45)', lineHeight: 1.7, marginBottom: 48, fontWeight: 300 }}>
+          Ready to integrate AIO AI into your world? Let's build the future together.
+        </p>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        style={{ background: 'rgba(255,255,255,0.02)', border: '0.5px solid rgba(0,245,255,0.12)', borderRadius: 20, padding: 40 }}
+      >
+        {sent ? (
+          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} style={{ textAlign: 'center', padding: '40px 0' }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>✓</div>
+            <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 18, color: '#00F5FF', marginBottom: 10 }}>Message Transmitted</div>
+            <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)', fontWeight: 300 }}>AIO AI will process your request within 24 hours.</div>
+          </motion.div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={{ display: 'flex', gap: 16 }}>
+              <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Your name" style={{ ...inputStyle, flex: 1 }} />
+              <input value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} placeholder="Email address" style={{ ...inputStyle, flex: 1 }} />
+            </div>
+            <textarea value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))} placeholder="Tell us about your project..." rows={5} style={{ ...inputStyle, resize: 'vertical' }} />
+
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+              {/* Email Submit */}
+              <motion.button
+                whileHover={{ y: -2, boxShadow: '0 8px 30px rgba(0,245,255,0.3)' }}
+                whileTap={{ scale: 0.97 }}
+                onClick={handleSubmit}
+                style={{
+                  background: 'linear-gradient(135deg, #00F5FF, #7B61FF)',
+                  color: '#0B0F1A', border: 'none', padding: '15px 36px',
+                  borderRadius: 10, fontFamily: 'Poppins, sans-serif',
+                  fontSize: 15, fontWeight: 600, cursor: 'pointer',
+                }}
+              >
+                Send Message
+              </motion.button>
+
+              {/* WhatsApp Button */}
+              <motion.button
+                whileHover={{ y: -2, boxShadow: '0 8px 30px rgba(37,211,102,0.35)' }}
+                whileTap={{ scale: 0.97 }}
+                onClick={handleWhatsApp}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 8,
+                  background: 'linear-gradient(135deg, #25D366, #128C7E)',
+                  color: '#fff', border: 'none', padding: '15px 28px',
+                  borderRadius: 10, fontFamily: 'Poppins, sans-serif',
+                  fontSize: 15, fontWeight: 600, cursor: 'pointer',
+                }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 32 32" fill="white">
+                  <path d="M16 0C7.163 0 0 7.163 0 16c0 2.822.736 5.468 2.027 7.77L0 32l8.43-2.01A15.938 15.938 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.27 13.27 0 01-6.747-1.835l-.483-.286-4.998 1.192 1.23-4.865-.314-.497A13.267 13.267 0 012.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.27-9.87c-.398-.199-2.355-1.162-2.72-1.294-.365-.133-.63-.199-.896.199-.265.398-1.029 1.294-1.261 1.56-.232.265-.465.298-.863.1-.398-.2-1.681-.62-3.202-1.976-1.183-1.056-1.982-2.36-2.214-2.758-.232-.398-.025-.613.174-.81.179-.178.398-.465.597-.697.2-.232.266-.398.398-.663.133-.265.067-.497-.033-.696-.1-.199-.896-2.161-1.228-2.958-.323-.776-.651-.671-.896-.683-.232-.01-.497-.013-.763-.013-.265 0-.696.1-1.061.497-.365.398-1.394 1.362-1.394 3.322s1.427 3.854 1.626 4.12c.199.265 2.808 4.287 6.804 6.015.951.41 1.693.655 2.271.839.954.304 1.823.261 2.51.158.765-.114 2.355-.963 2.688-1.893.332-.93.332-1.727.232-1.893-.1-.166-.365-.265-.763-.464z" />
+                </svg>
+                Text on WhatsApp
+              </motion.button>
+            </div>
+          </div>
+        )}
+      </motion.div>
+    </section>
+  )
+}
+
+
+// ==========================================
+// FILE: src/components/Demo.jsx
+// ==========================================
+
+import { useState, useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+
+const MODES = [
+  {
+    id: 'generate',
+    label: '⚡ Generate Response',
+    system: 'You are AIO AI, a futuristic combined intelligence system with anti-gravity technology. Respond in character — confident, technical, slightly futuristic. Keep responses to 3-4 sentences.',
+  },
+  {
+    id: 'summarize',
+    label: '📋 Summarize',
+    system: "You are AIO AI's summarization engine. Extract the key essence of anything the user provides in 2-3 crisp bullet points. If no text is provided, ask them to paste something to summarize.",
+  },
+  {
+    id: 'notes',
+    label: '📝 Create Notes',
+    system: "You are AIO AI's smart notes system. Convert the user's input into structured smart notes with a title, key points, and one action item. Format it cleanly.",
+  },
+]
+
+// Using backend Gemini API proxy at /api/chat
+
+export default function Demo() {
+  const [input, setInput] = useState('')
+  const [output, setOutput] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [mode, setMode] = useState('generate')
+  const [error, setError] = useState('')
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+
+  const activeMode = MODES.find(m => m.id === mode)
+
+  const run = async () => {
+    if (!input.trim()) return
+    setLoading(true)
+    setOutput('')
+    setError('')
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          system: activeMode.system,
+          messages: [{ role: 'user', content: input }],
+        }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data?.error?.message || `API error ${res.status}`)
+      }
+
+      const text =
+        data.content?.map(c => c.text || '').join('') ||
+        'No response received.'
+      setOutput(text)
+    } catch (e) {
+      setError(e.message || 'Connection error. Check your API key.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <section id="demo" ref={ref} style={{ padding: '100px 40px', maxWidth: 820, margin: '0 auto' }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}>
+        <div style={{ fontFamily: 'Orbitron, monospace', fontSize: 10, letterSpacing: 4, color: '#7B61FF', marginBottom: 12 }}>// INTERACTIVE DEMO</div>
+        <h2 style={{ fontFamily: 'Orbitron, monospace', fontSize: 'clamp(24px,3vw,40px)', fontWeight: 700, marginBottom: 14 }}>
+          Ask <span style={{ color: '#7B61FF' }}>AIO AI</span>
+        </h2>
+        <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.45)', maxWidth: 460, lineHeight: 1.7, marginBottom: 48, fontWeight: 300 }}>
+          Powered by real AI. Type anything and experience live intelligence.
+        </p>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        style={{ background: 'rgba(255,255,255,0.02)', border: '0.5px solid rgba(123,97,255,0.2)', borderRadius: 20, padding: 36 }}
+      >
+        {/* Terminal header */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 28 }}>
+          {['#FF5F57', '#FEBC2E', '#28C840'].map(c => (
+            <div key={c} style={{ width: 10, height: 10, borderRadius: '50%', background: c }} />
+          ))}
+          <span style={{ fontFamily: 'Orbitron, monospace', fontSize: 10, color: 'rgba(255,255,255,0.25)', marginLeft: 8, letterSpacing: 2 }}>
+            AIO TERMINAL v2.0 — LIVE AI
+          </span>
+          <span style={{ marginLeft: 'auto', fontSize: 10, fontFamily: 'Orbitron, monospace', color: '#00F5FF', animation: 'pulse 1.5s ease infinite' }}>
+            ● ONLINE
+          </span>
+        </div>
+
+        {/* Mode selector */}
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 20 }}>
+          {MODES.map(m => (
+            <motion.button
+              key={m.id}
+              whileTap={{ scale: 0.96 }}
+              onClick={() => setMode(m.id)}
+              style={{
+                background: mode === m.id ? 'rgba(0,245,255,0.1)' : 'rgba(123,97,255,0.08)',
+                border: `0.5px solid ${mode === m.id ? 'rgba(0,245,255,0.4)' : 'rgba(123,97,255,0.25)'}`,
+                color: mode === m.id ? '#00F5FF' : '#7B61FF',
+                padding: '9px 18px', borderRadius: 8,
+                fontFamily: 'Poppins, sans-serif', fontSize: 13,
+                cursor: 'pointer', transition: 'all 0.2s',
+              }}
+            >
+              {m.label}
+            </motion.button>
+          ))}
+        </div>
+
+        {/* Input */}
+        <div style={{ display: 'flex', gap: 10, marginBottom: 16 }}>
+          <input
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && run()}
+            placeholder="Ask AI anything... (press Enter)"
+            style={{
+              flex: 1, background: 'rgba(255,255,255,0.04)',
+              border: '0.5px solid rgba(255,255,255,0.1)',
+              borderRadius: 10, padding: '14px 18px',
+              color: '#fff', fontFamily: 'Poppins, sans-serif', fontSize: 14,
+              outline: 'none',
+            }}
+          />
+          <motion.button
+            whileTap={{ scale: 0.96 }}
+            onClick={run}
+            disabled={loading || !input.trim()}
+            style={{
+              background: loading ? 'rgba(0,245,255,0.3)' : 'linear-gradient(135deg, #00F5FF, #7B61FF)',
+              color: '#0B0F1A', border: 'none', padding: '12px 22px',
+              borderRadius: 10, fontFamily: 'Poppins, sans-serif',
+              fontSize: 14, fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {loading ? '...' : 'Send'}
+          </motion.button>
+        </div>
+
+        {/* Output */}
+        <div style={{
+          background: 'rgba(0,0,0,0.3)',
+          border: '0.5px solid rgba(0,245,255,0.08)',
+          borderRadius: 12, padding: 22, minHeight: 100,
+        }}>
+          {loading && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div style={{ display: 'flex', gap: 4 }}>
+                {[0, 1, 2].map(i => (
+                  <motion.div
+                    key={i}
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 0.8, delay: i * 0.15, repeat: Infinity }}
+                    style={{ width: 6, height: 6, borderRadius: '50%', background: '#00F5FF' }}
+                  />
+                ))}
+              </div>
+              <span style={{ fontSize: 12, fontFamily: 'Orbitron, monospace', color: 'rgba(0,245,255,0.6)', letterSpacing: 2 }}>
+                AIO THINKING...
+              </span>
+            </div>
+          )}
+          {error && <div style={{ color: '#FF6B6B', fontSize: 13 }}>{error}</div>}
+          {!loading && !error && output && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              style={{ fontSize: 14, color: 'rgba(255,255,255,0.75)', lineHeight: 1.8, fontWeight: 300, whiteSpace: 'pre-wrap' }}
+            >
+              {output}
+            </motion.div>
+          )}
+          {!loading && !error && !output && (
+            <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: 13, fontStyle: 'italic' }}>
+              Your AI response will appear here...
+            </span>
+          )}
+        </div>
+      </motion.div>
+      <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}`}</style>
+    </section>
+  )
+}
+
+

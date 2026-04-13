@@ -1,0 +1,111 @@
+// ==========================================
+// FILE: api/index.js
+// ==========================================
+
+// api/index.js — AIO AI backend proxy (Dual Gemma)
+//
+// Setup:
+//   1. Local: Ensure Ollama is running  (`ollama serve` and `ollama pull gemma3:1b`)
+//   2. Cloud: Set GEMINI_API_KEY in Vercel. Vercel automatically switches to the cloud Gemma API.
+
+import 'dotenv/config'
+import express from 'express'
+import cors from 'cors'
+import { GoogleGenerativeAI } from '@google/generative-ai'
+
+const app = express()
+const PORT = process.env.PORT || 5001
+
+app.use(cors())
+app.use(express.json())
+
+app.post('/api/chat', async (req, res) => {
+  const { system, messages } = req.body
+
+  if (!messages || !Array.isArray(messages) || messages.length === 0) {
+    return res.status(400).json({ error: 'messages array is required and cannot be empty' })
+  }
+
+  // --- VERCEL CLOUD LOGIC (Uses Official Cloud Gemma API) ---
+  if (process.env.VERCEL) {
+    try {
+      const apiKey = process.env.GEMINI_API_KEY
+      if (!apiKey) return res.status(500).json({ error: 'GEMINI_API_KEY not set in Vercel' })
+
+      const genAI = new GoogleGenerativeAI(apiKey)
+      const model = genAI.getGenerativeModel({
+        model: 'gemma-3-1b-it',
+      })
+      
+      let localMessages = [...messages]
+      if (system && localMessages.length > 0) {
+        localMessages[0] = {
+          ...localMessages[0],
+          content: `System Instructions: ${system}\n\nTask: ${localMessages[0].content}`
+        }
+      }
+
+      const formattedHistory = localMessages.slice(0, -1).map(m => ({
+        role: m.role === 'model' || m.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: String(m.content) }]
+      }))
+      
+      const lastMessage = String(localMessages[localMessages.length - 1].content)
+      const chat = model.startChat({ history: formattedHistory })
+      const result = await chat.sendMessage(lastMessage)
+      return res.json({ content: [{ text: result.response.text() || '' }] })
+    } catch (err) {
+      console.error('Vercel Cloud API Error:', err)
+      return res.status(500).json({ error: 'Cloud Gemma API failed on Vercel: ' + err.message })
+    }
+  }
+
+  // --- LOCALHOST LOGIC (Uses local Ollama) ---
+  try {
+    let ollamaMessages = []
+    if (system) {
+      ollamaMessages.push({ role: 'system', content: system })
+    }
+    ollamaMessages.push(...messages)
+
+    const ollamaRes = await fetch('http://127.0.0.1:11434/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'gemma3:1b',
+        messages: ollamaMessages,
+        stream: false,
+      }),
+    })
+
+    if (!ollamaRes.ok) {
+      const err = await ollamaRes.text()
+      throw new Error(`Ollama API error: ${err}`)
+    }
+
+    const data = await ollamaRes.json()
+    const text = data.message?.content || ''
+
+    return res.json({ content: [{ text }] })
+
+  } catch (err) {
+    console.error('Server error (Is Ollama running?):', err)
+    return res.status(500).json({ error: 'Failed to connect to local Gemma model. Make sure Ollama is running.' })
+  }
+})
+
+app.get('/api/health', (_req, res) => {
+  res.json({ status: 'ok', model: process.env.VERCEL ? 'gemma-3-1b-it (Cloud)' : 'gemma3:1b (Local)' })
+})
+
+export default app;
+
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`✅  AIO AI backend running on http://localhost:${PORT}`)
+    console.log(`   POST /api/chat  — Local Gemma (Ollama) proxy`)
+    console.log(`   GET  /api/health`)
+  })
+}
+
+
